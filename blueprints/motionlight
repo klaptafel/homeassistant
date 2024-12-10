@@ -29,14 +29,14 @@ blueprint:
           min: 0
           max: 60
           unit_of_measurement: minutes
-		light_off_transition:
-			name: Transition
-			description: Time it takes to dim the light to off.
-			selector:
-				number:
-					min: 0
-					max: 30
-					unit_of_measurement: minutes
+    light_off_transition:
+      name: Transition
+      description: Time it takes to dim the light to off.
+      selector:
+        number:
+          min: 0
+          max: 30
+          unit_of_measurement: minutes
 
 # If motion is detected within the delay,
 # we restart the script.

@@ -64,5 +64,5 @@ actions:
   - alias: "Turn off the light"
     action: light.turn_off
     target: !input light_target
-		data:
-		  transition: !input light_off_transition
+    data:
+      transition: !input light_off_transition

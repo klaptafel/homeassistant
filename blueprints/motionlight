@@ -38,11 +38,12 @@ blueprint:
           min: 0
           max: 120
           unit_of_measurement: seconds
-    condition_template:
-      name: "Geavanceerd: Voorwaarden (optioneel)"
-      description: Deze automatisering wordt alleen uitgevoerd als deze template 'true' is.
+    condition_auto:
+      name: "Voorwaarden (optioneel)"
+      description: Deze automatisering wordt alleen uitgevoerd als aan deze voorwaarden wordt voldaan.
+      default: []
       selector:
-        template: {}
+        condition: {}
       
 
 # If motion is detected within the delay,
@@ -57,8 +58,7 @@ triggers:
   to: "on"
 
 conditions:
-  - condition: template
-    value_template: !input condition_template
+  - condition: !input condition_auto
 
 actions:
   - alias: "Verlichting inschakelen"

@@ -1,12 +1,12 @@
 blueprint:
-  name: ㆝ Motion-activated Light
-  description: Turn on a light when motion is detected.
+  name: ㆝ Licht bij beweging
+  description: Schakelt het licht aan bij beweging en uit wanneer er geen beweging meer wordt gedetecteerd.
   domain: automation
   source_url: https://github.com/klaptafel/homeassistant/blob/main/blueprints/motionlightcomponents/automation/blueprints/motion_light.yaml
   author: klaptafel
   input:
     motion_entity:
-      name: Motion Sensor
+      name: Bewegingssensor
       selector:
         entity:
           filter:
@@ -15,14 +15,14 @@ blueprint:
             - device_class: motion
               domain: binary_sensor
     light_target:
-      name: Light
+      name: Verlichting
       selector:
         target:
           entity:
             domain: light
     no_motion_wait:
-      name: Wait time
-      description: Time to leave the light on after last motion is detected.
+      name: Vertraging bij uitschakelen
+      description: Zonder vertraging wordt de verlichting direct uitgeschakeld wanneer er geen beweging meer wordt gedetecteerd.
       default: 2
       selector:
         number:
@@ -30,14 +30,20 @@ blueprint:
           max: 60
           unit_of_measurement: minutes
     light_off_transition:
-      name: Transition
-      description: Time it takes to dim the light to off.
+      name: Uitschakelduur
+      description: In deze tijdsduur dimt de verlichting tot 0% (uit), mits de verlichting dit ondersteund.
       default: 2
       selector:
         number:
           min: 0
           max: 120
           unit_of_measurement: seconds
+    conditions:
+      name: "Geavanceerd: Voorwaarden (optioneel)"
+      description: Deze automatisering wordt alleen uitgevoerd als deze template 'true' is.
+      selector:
+        template: {}
+      
 
 # If motion is detected within the delay,
 # we restart the script.
@@ -50,17 +56,21 @@ triggers:
   from: "off"
   to: "on"
 
+conditions:
+  - condition: template
+    value_template: !input condition_template
+
 actions:
-  - alias: "Turn on the light"
+  - alias: "Verlichting inschakelen"
     action: light.turn_on
     target: !input light_target
-  - alias: "Wait until there is no motion from device"
+  - alias: "Wacht tot er geen beweging meer wordt gedetecteerd"
     wait_for_trigger:
       trigger: state
       entity_id: !input motion_entity
       from: "on"
       to: "off"
-  - alias: "Wait the number of minutes that has been set"
+  - alias: "Vertraging"
     delay: !input no_motion_wait
   - alias: "Turn off the light"
     action: light.turn_off

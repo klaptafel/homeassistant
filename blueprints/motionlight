@@ -1,6 +1,6 @@
 blueprint:
-  name: ㆝ Verlichting bij beweging
-  description: Schakelt de verlichting bij beweging en uit wanneer er geen beweging meer wordt gedetecteerd.
+  name: "㆝ Verlichting bij beweging"
+  description: "Schakelt de verlichting bij beweging en uit wanneer er geen beweging meer wordt gedetecteerd."
   domain: automation
   source_url: https://github.com/klaptafel/homeassistant/blob/main/blueprints/motionlightcomponents/automation/blueprints/motion_light.yaml
   author: klaptafel

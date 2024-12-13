@@ -4,10 +4,7 @@ blueprint:
   domain: automation
   source_url: https://github.com/klaptafel/homeassistant/blob/main/blueprints/motionlightcomponents/automation/blueprints/motion_light.yaml
   author: klaptafel
-  
-# Input
   input:
-  
     motion_entity:
       name: Bewegingssensor
       selector:
@@ -17,21 +14,18 @@ blueprint:
               domain: binary_sensor
             - device_class: motion
               domain: binary_sensor
-    
     condition_auto:
       name: "Voorwaarden (optioneel)"
       description: Deze automatisering wordt alleen uitgevoerd als aan deze voorwaarden wordt voldaan.
       default: []
       selector:
         condition: {}
-   
    light_target:
       name: Verlichting
       selector:
         target:
           entity:
             domain: light
-    
     light_on_transition:
       name: Inschakelduur
       description: In deze tijdsduur schakelt de verlichting in, mits ondersteund).
@@ -41,7 +35,6 @@ blueprint:
           min: 0
           max: 120
           unit_of_measurement: seconds
-    
     no_motion_wait:
       name: Vertraging bij uitschakelen
       description: Zonder vertraging wordt de verlichting direct uitgeschakeld wanneer er geen beweging meer wordt gedetecteerd.
@@ -51,7 +44,6 @@ blueprint:
           min: 0
           max: 60
           unit_of_measurement: minutes
-    
     light_off_transition:
       name: Uitschakelduur
       description: In deze tijdsduur dimt de verlichting tot 0% (uit), mits ondersteund.

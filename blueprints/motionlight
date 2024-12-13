@@ -54,13 +54,11 @@ blueprint:
           max: 120
           unit_of_measurement: seconds
 
-      
 
-# If motion is detected within the delay, we restart the script.
 mode: restart
 max_exceeded: silent
 
-# Automation
+
 triggers:
   trigger: state
   entity_id: !input motion_entity

@@ -20,7 +20,7 @@ blueprint:
       default: []
       selector:
         condition: {}
-   light_target:
+    light_target:
       name: Verlichting
       selector:
         target:
@@ -28,7 +28,7 @@ blueprint:
             domain: light
     light_on_transition:
       name: Inschakelduur
-      description: In deze tijdsduur schakelt de verlichting in, mits ondersteund).
+      description: "In deze tijdsduur schakelt de verlichting in, mits ondersteund."
       default: 0
       selector:
         number:
@@ -37,7 +37,7 @@ blueprint:
           unit_of_measurement: seconds
     no_motion_wait:
       name: Vertraging bij uitschakelen
-      description: Zonder vertraging wordt de verlichting direct uitgeschakeld wanneer er geen beweging meer wordt gedetecteerd.
+      description: "Zonder vertraging wordt de verlichting direct uitgeschakeld wanneer er geen beweging meer wordt gedetecteerd."
       default: 2
       selector:
         number:
@@ -46,7 +46,7 @@ blueprint:
           unit_of_measurement: minutes
     light_off_transition:
       name: Uitschakelduur
-      description: In deze tijdsduur dimt de verlichting tot 0% (uit), mits ondersteund.
+      description: "In deze tijdsduur dimt de verlichting tot 0% (uit), mits ondersteund."
       default: 2
       selector:
         number:
@@ -54,16 +54,14 @@ blueprint:
           max: 120
           unit_of_measurement: seconds
 
-
 mode: restart
 max_exceeded: silent
 
-
 triggers:
-  trigger: state
-  entity_id: !input motion_entity
-  from: "off"
-  to: "on"
+  - trigger: state
+    entity_id: !input motion_entity
+    from: "off"
+    to: "on"
 
 conditions:
   - condition: !input condition_auto
@@ -76,13 +74,14 @@ actions:
       transition: !input light_on_transition
   - alias: "Wacht tot er geen beweging meer wordt gedetecteerd"
     wait_for_trigger:
-      trigger: state
-      entity_id: !input motion_entity
-      from: "on"
-      to: "off"
+      - platform: state
+        entity_id: !input motion_entity
+        from: "on"
+        to: "off"
   - alias: "Vertraging"
-    delay: !input no_motion_wait
-  - alias: "Turn off the light"
+    delay:
+      minutes: !input no_motion_wait
+  - alias: "Verlichting uitschakelen"
     action: light.turn_off
     target: !input light_target
     data:

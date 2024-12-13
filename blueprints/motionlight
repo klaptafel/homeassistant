@@ -38,7 +38,7 @@ blueprint:
           min: 0
           max: 120
           unit_of_measurement: seconds
-    conditions:
+    condition_template:
       name: "Geavanceerd: Voorwaarden (optioneel)"
       description: Deze automatisering wordt alleen uitgevoerd als deze template 'true' is.
       selector:

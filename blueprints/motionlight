@@ -14,18 +14,18 @@ blueprint:
               domain: binary_sensor
             - device_class: motion
               domain: binary_sensor
-    condition_auto:
-      name: "Voorwaarden (optioneel)"
-      description: Deze automatisering wordt alleen uitgevoerd als aan deze voorwaarden wordt voldaan.
-      default: []
-      selector:
-        condition: {}
     light_target:
       name: Verlichting
       selector:
         target:
           entity:
             domain: light
+    condition_auto:
+      name: "Voorwaarden (optioneel)"
+      description: Deze automatisering wordt alleen uitgevoerd als aan deze voorwaarden wordt voldaan.
+      default: []
+      selector:
+        condition: {}
     light_on_transition:
       name: Inschakelduur
       description: "In deze tijdsduur schakelt de verlichting in, mits ondersteund."

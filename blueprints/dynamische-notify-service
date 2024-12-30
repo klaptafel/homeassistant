@@ -1,4 +1,5 @@
 blueprint:
+  domain: script
   name: Dynamische Notify Service
   description: >
     Configureerbare melding naar een specifieke ontvanger of automatisch aan de hand van sensorgegevens.
@@ -81,7 +82,7 @@ blueprint:
               value: critical
 
 mode: single
-domain: script
+
 variables:
   recipients: !input recipients
   recipient_mode: !input recipient

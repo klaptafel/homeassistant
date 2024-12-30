@@ -34,13 +34,11 @@ fields:
     description: Titel van de melding.
     selector:
       text: {}
-    required: true
   message:
     name: Bericht
     description: Inhoud van de melding.
     selector:
       text: {}
-    required: true
 
 
 sequence:

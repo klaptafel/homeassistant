@@ -71,5 +71,5 @@ sequence:
               sequence:
                 - service: "{{ repeat.item }}"
                   data:
-                    title: !input title
-                    message: !input message
+                    title: "{{ title }}"
+                    message: "{{ message }}"

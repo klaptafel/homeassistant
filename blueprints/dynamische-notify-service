@@ -18,6 +18,7 @@ blueprint:
       description: Wie moet de melding ontvangen?
       selector:
         select:
+          mode: dropdown
           options:
             - label: Specifieke ontvanger
               value: specifiek
@@ -65,9 +66,13 @@ blueprint:
     interruption_level:
       name: Attentiewaarde
       description: Prioriteitsniveau van de melding.
+      default: active
       selector:
         select:
+          mode: dropdown
           options:
+            - label: Normaal
+              value: active
             - label: Stil
               value: passive
             - label: Belangrijk

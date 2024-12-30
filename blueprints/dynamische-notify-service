@@ -39,37 +39,31 @@ blueprint:
     group:
       name: Groep
       description: Groepeer notificaties.
-      required: false
       selector:
         text: {}
     tag:
       name: Tag
       description: Notificaties met dezelfde tag worden vervangen.
-      required: false
       selector:
         text: {}
     image:
       name: Afbeelding
       description: URL van een afbeelding om bij te voegen.
-      required: false
       selector:
         text: {}
     camera:
       name: Camera
       description: Selecteer een camera-entiteit.
-      required: false
       selector:
         entity: {}
     actions:
       name: Acties
       description: Optionele acties voor de notificatie.
-      required: false
       selector:
         object: {}
     interruption_level:
       name: Attentiewaarde
       description: Prioriteitsniveau van de melding.
-      required: false
       selector:
         select:
           options:

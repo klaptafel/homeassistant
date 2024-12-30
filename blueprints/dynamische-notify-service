@@ -1,75 +1,26 @@
 blueprint:
-  name: ㆝ Dynamische Notify Service
-  description: >
-    Configureerbare melding naar een specifieke ontvanger of automatisch aan de hand van sensorgegevens.
-    Alle entiteiten en notify-services worden door de gebruiker ingesteld.
+  name: Send notification
+  description: >-
+    A script that announces a message on a media player using text-to-speech.
   domain: script
   input:
-    recipients:
-      name: Ontvangersconfiguratie
-      description: >
-        Configureer notify-services en bijbehorende sensors voor elke ontvanger.
-        Voeg elke ontvanger toe als een object met `notify_service` en `home_sensor`.
-      default: []
+    notify:
       selector:
         object: {}
-    
-fields:
-  recipient:
-      name: Ontvanger
-      description: Wie moet de melding ontvangen?
-      selector:
-        select:
-          mode: dropdown
-          options:
-            - label: Specifieke ontvanger
-              value: specifiek
-            - label: Iedereen
-              value: iedereen
-            - label: Automatisch (op basis van thuisstatus)
-              value: automatisch
-      default: iedereen
-  title:
-    name: Titel
-    description: Titel van de melding.
-    selector:
-      text: {}
-  message:
-    name: Bericht
-    description: Inhoud van de melding.
-    selector:
-      text: {}
+      name: Notify service
 
+mode: queued
+
+fields:
+  message:
+    selector:
+      text:
+        multiline: true
+    name: Message
+    description: The message to send
+    required: true
 
 sequence:
-  - variables:
-      notify_services: >
-        {% set services = [] %}
-        {% if recipient_mode == 'iedereen' %}
-          {% for recipient in recipients %}
-            {% set services = services + [recipient.notify_service] %}
-          {% endfor %}
-        {% elif recipient_mode == 'specifiek' %}
-          {% for recipient in recipients %}
-            {% set services = services + [recipient.notify_service] %}
-          {% endfor %}
-        {% elif recipient_mode == 'automatisch' %}
-          {% for recipient in recipients %}
-            {% if is_state(recipient.home_sensor, 'on') %}
-              {% set services = services + [recipient.notify_service] %}
-            {% endif %}
-          {% endfor %}
-        {% endif %}
-        {{ services }}
-  - choose:
-      - conditions:
-          - condition: template
-            value_template: "{{ notify_services | length > 0 }}"
-        sequence:
-          - repeat:
-              for_each: "{{ notify_services }}"
-              sequence:
-                - service: "{{ repeat.item }}"
-                  data:
-                    title: "{{ title }}"
-                    message: "{{ message }}"
+- action: !input notify
+  data:
+    message: "{{ message }}"

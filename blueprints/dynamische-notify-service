@@ -1,10 +1,9 @@
 blueprint:
-  domain: script
   name: Dynamische Notify Service
   description: >
     Configureerbare melding naar een specifieke ontvanger of automatisch aan de hand van sensorgegevens.
     Alle entiteiten en notify-services worden door de gebruiker ingesteld.
-  domain: automation
+  domain: script
   input:
     recipients:
       name: Ontvangersconfiguratie

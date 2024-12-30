@@ -28,7 +28,7 @@ blueprint:
               value: automatisch
       default: iedereen
   
-mode: queued
+
 
 fields:
   title:

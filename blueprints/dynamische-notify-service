@@ -5,80 +5,63 @@ blueprint:
     Alle entiteiten en notify-services worden door de gebruiker ingesteld.
   domain: script
   input:
-    recipients:
-      name: Ontvangersconfiguratie
-      description: >
-        Configureer notify-services en bijbehorende sensors voor elke ontvanger.
-        Voeg elke ontvanger toe als een object met `notify_service` en `home_sensor`.
-      default: []
-      selector:
-        object: {}
-    recipient:
-      name: Ontvanger
-      description: Wie moet de melding ontvangen?
-      selector:
-        select:
-          mode: dropdown
-          options:
-            - label: Specifieke ontvanger
-              value: specifiek
-            - label: Iedereen
-              value: iedereen
-            - label: Automatisch (op basis van thuisstatus)
-              value: automatisch
-      default: iedereen
-    title:
-      name: Titel
-      description: Titel van de melding.
-      selector:
-        text: {}
-    message:
-      name: Bericht
-      description: Inhoud van de melding.
-      selector:
-        text: {}
-    group:
-      name: Groep
-      description: Groepeer notificaties.
-      selector:
-        text: {}
-    tag:
-      name: Tag
-      description: Notificaties met dezelfde tag worden vervangen.
-      selector:
-        text: {}
-    image:
-      name: Afbeelding
-      description: URL van een afbeelding om bij te voegen.
-      selector:
-        text: {}
-    camera:
-      name: Camera
-      description: Selecteer een camera-entiteit.
-      selector:
-        entity:
-          domain: camera
-    actions:
-      name: Acties
-      description: Optionele acties voor de notificatie.
-      selector:
-        object: {}
-    interruption_level:
-      name: Attentiewaarde
-      description: Prioriteitsniveau van de melding.
-      default: active
-      selector:
-        select:
-          mode: dropdown
-          options:
-            - label: Normaal
-              value: active
-            - label: Stil
-              value: passive
-            - label: Belangrijk
-              value: time-sensitive
-            - label: Kritiek
-              value: critical
+  title:
+    name: Titel
+    description: Titel van de melding.
+    selector:
+      text: {}
+  message:
+    name: Bericht
+    description: Inhoud van de melding.
+    selector:
+      text: {}
+  group:
+    name: Groep
+    description: Groepeer notificaties.
+    selector:
+      text: {}
+    default: ""  # Maak optioneel door een lege string als default in te stellen
+  tag:
+    name: Tag
+    description: Notificaties met dezelfde tag worden vervangen.
+    selector:
+      text: {}
+    default: ""  # Maak optioneel door een lege string als default in te stellen
+  image:
+    name: Afbeelding
+    description: URL van een afbeelding om bij te voegen.
+    selector:
+      text: {}
+    default: ""  # Maak optioneel door een lege string als default in te stellen
+  camera:
+    name: Camera
+    description: Selecteer een camera-entiteit.
+    selector:
+      entity:
+        domain: camera
+    default: null  # Maak optioneel door null in te stellen
+  actions:
+    name: Acties
+    description: Optionele acties voor de notificatie.
+    selector:
+      object: {}
+    default: {}  # Maak optioneel door een lege waarde te definiëren
+  interruption_level:
+    name: Attentiewaarde
+    description: Prioriteitsniveau van de melding.
+    default: active
+    selector:
+      select:
+        mode: dropdown
+        options:
+          - label: Normaal
+            value: active
+          - label: Stil
+            value: passive
+          - label: Belangrijk
+            value: time-sensitive
+          - label: Kritiek
+            value: critical
 
 mode: single
 

@@ -1,7 +1,7 @@
 blueprint:
   name: Send notification
   description: >-
-    A script that announces a message on a media player using text-to-speech.
+    A script that sends a notification.
   domain: script
   input:
     recipients:

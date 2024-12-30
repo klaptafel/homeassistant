@@ -1,8 +1,7 @@
 blueprint:
-  name: Dynamische Notify Service met Thuisstatus
+  name: Notificatie versturen
   description: >-
-    Configureerbare melding naar een specifieke ontvanger of automatisch op basis van thuisstatus.
-    Alle notify-services en aanwezigheidssensors worden door de gebruiker ingesteld.
+    Een script om notificaties te versturen.
   domain: script
   input:
     recipients:
@@ -13,90 +12,34 @@ blueprint:
       default: []
       selector:
         object: {}
-    
-fields:
-  recipient_mode:
-    name: Ontvanger keuze
-    description: Wie moet de melding ontvangen? Specifieke ontvanger, iedereen of automatisch.
-    selector:
-      select:
-        mode: dropdown
-        options:
-          - label: Specifieke ontvanger
-            value: specifiek
-          - label: Iedereen
-            value: iedereen
-          - label: Automatisch (op basis van thuisstatus)
-            value: automatisch
-    default: iedereen
 
-  title:
-    selector:
-      text: {}
-    name: Titel
-    description: Titel van de melding
-    required: true
-    
+mode: queued
+
+fields:
   message:
     selector:
       text:
         multiline: true
-    name: Bericht
-    description: De inhoud van de notificatie
+    name: Message
+    description: The message to broadcast
     required: true
-    
-  group:
-    selector:
-      text: null
-    name: Groep
-    description: Groepeer notificaties
-    
-  tag:
-    selector:
-      text: null
-    name: Tag
-    description: Notificaties met dezelfde tag worden vervangen
-    
-  image:
-    selector:
-      text: {}
-    name: Afbeelding
-    description: URL van een afbeelding om bij te voegen
-    
-  camera:
-    selector:
-      entity:
-        domain: camera
-    name: Camera
-    description: Selecteer een camera-entiteit
-    
-  actions:
-    selector:
-      object: {}
-    name: Acties
-    description: Optionele acties voor de notificatie
-    
-  interruption_level:
-    selector:
-      select:
-        options:
-          - label: Normaal
-            value: active
-          - label: Stil
-            value: passive
-          - label: Belangrijk
-            value: time-sensitive
-          - label: Kritiek
-            value: critical
-      name: Attentiewaarde
-      description: De prioriteit van de notificatie
-      default: active
-    
-  url:
-    selector:
-      text: null
-    name: URL
-    description: De notificatie opent...
+  recipient:
+      name: Ontvanger
+      description: Wie moet de melding ontvangen?
+      selector:
+        select:
+          options:
+            - label: Specifieke ontvanger
+              value: specifiek
+            - label: Iedereen
+              value: iedereen
+            - label: Automatisch (op basis van thuisstatus)
+              value: automatisch
+      default: iedereen
+
+variables:
+  recipients: !input recipients
+  recipient_mode: !input recipient
 
 sequence:
   - variables:
@@ -111,19 +54,11 @@ sequence:
             {% set services = services + [recipient.notify_service] %}
           {% endfor %}
         {% elif recipient_mode == 'automatisch' %}
-          {% set all_home = true %}
           {% for recipient in recipients %}
             {% if is_state(recipient.home_sensor, 'on') %}
               {% set services = services + [recipient.notify_service] %}
-            {% else %}
-              {% set all_home = false %}
             {% endif %}
           {% endfor %}
-          {% if all_home == false %}
-            {% for recipient in recipients %}
-              {% set services = services + [recipient.notify_service] %}
-            {% endfor %}
-          {% endif %}
         {% endif %}
         {{ services }}
   - choose:
@@ -136,12 +71,4 @@ sequence:
               sequence:
                 - service: "{{ repeat.item }}"
                   data:
-                    title: !input title
                     message: !input message
-                    data:
-                      group: !input group
-                      tag: !input tag
-                      image: !input image
-                      actions: !input actions
-                      push:
-                        interruption-level: "{{ interruption_level }}"

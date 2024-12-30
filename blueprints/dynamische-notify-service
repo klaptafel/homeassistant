@@ -81,6 +81,7 @@ blueprint:
               value: critical
 
 mode: single
+domain: script
 variables:
   recipients: !input recipients
   recipient_mode: !input recipient

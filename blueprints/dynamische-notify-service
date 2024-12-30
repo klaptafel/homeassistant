@@ -27,68 +27,65 @@ blueprint:
             - label: Automatisch (op basis van thuisstatus)
               value: automatisch
       default: iedereen
-
-fields:
-  title:
-    selector:
-      text: {}
-    name: Titel
-    description: Titel van de melding
-    required: true
-  message:
-    selector:
-      text:
-        multiline: true
-    name: Bericht
-    description: De inhoud van de notificatie
-    required: true
-  group:
-    selector:
-      text: null
-    name: Groep
-    description: Groepeer notificaties
-  tag:
-    selector:
-      text: null
-    name: Tag
-    description: Notificaties met dezelfde tag worden vervangen
-  image:
-    selector:
-      text: {}
-    name: Afbeelding
-    description: URL van een afbeelding om bij te voegen
-  camera:
-    selector:
-      entity:
-        domain: camera
-    name: Camera
-    description: Selecteer een camera-entiteit
-  actions:
-    selector:
-      object: {}
-    name: Acties
-    description: Optionele acties voor de notificatie
-  interruption_level:
-    selector:
-      select:
-        options:
-          - label: Normaal
-            value: active
-          - label: Stil
-            value: passive
-          - label: Belangrijk
-            value: time-sensitive
-          - label: Kritiek
-            value: critical
+    title:
+      name: Titel
+      description: Titel van de melding
+      selector:
+        text: {}
+      required: true
+    message:
+      name: Bericht
+      description: De inhoud van de notificatie
+      selector:
+        text:
+          multiline: true
+      required: true
+    group:
+      name: Groep
+      description: Groepeer notificaties
+      selector:
+        text: null
+    tag:
+      name: Tag
+      description: Notificaties met dezelfde tag worden vervangen
+      selector:
+        text: null
+    image:
+      name: Afbeelding
+      description: URL van een afbeelding om bij te voegen
+      selector:
+        text: {}
+    camera:
+      name: Camera
+      description: Selecteer een camera-entiteit
+      selector:
+        entity:
+          domain: camera
+    actions:
+      name: Acties
+      description: Optionele acties voor de notificatie
+      selector:
+        object: {}
+    interruption_level:
       name: Attentiewaarde
       description: De prioriteit van de notificatie
+      selector:
+        select:
+          options:
+            - label: Normaal
+              value: active
+            - label: Stil
+              value: passive
+            - label: Belangrijk
+              value: time-sensitive
+            - label: Kritiek
+              value: critical
       default: active
-    required: false
-  url:
-    selector:
-      text: null
-    name: De notificatie opent...
-    description: URL die geopend wordt bij het klikken van de notificatie
+    url:
+      name: URL
+      description: De notificatie opent...
+      selector:
+        text: null
 
 sequence:
   - variables:

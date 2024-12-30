@@ -27,8 +27,7 @@ blueprint:
             - label: Automatisch (op basis van thuisstatus)
               value: automatisch
       default: iedereen
-  
-mode: single
+  mode: single  # Veranderd naar 'single', wat de geldige waarde is
 
 fields:
   title:

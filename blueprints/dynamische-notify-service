@@ -37,15 +37,15 @@ sequence:
 - variables:
     notify_services: >
       {% set services = [] %}
-      {% if recipient_mode == 'iedereen' %}
+      {% if recipient == 'iedereen' %}
         {% for recipient in recipients %}
           {% set services = services + [recipient.notify_service] %}
         {% endfor %}
-      {% elif recipient_mode == 'specifiek' %}
+      {% elif recipient == 'specifiek' %}
         {% for recipient in recipients %}
           {% set services = services + [recipient.notify_service] %}
         {% endfor %}
-      {% elif recipient_mode == 'automatisch' %}
+      {% elif recipient == 'automatisch' %}
         {% for recipient in recipients %}
           {% if is_state(recipient.home_sensor, 'on') %}
             {% set services = services + [recipient.notify_service] %}
@@ -55,13 +55,13 @@ sequence:
       {{ services }}
 
 - choose:
-      - conditions:
-          - condition: template
-            value_template: "{{ notify_services | length > 0 }}"
-        sequence:
-          - repeat:
-              for_each: "{{ notify_services }}"
-              sequence:
-                - service: "{{ repeat.item }}"
-                  data:
-                    message: "{{ message }}"
+    - conditions:
+        - condition: template
+          value_template: "{{ notify_services | length > 0 }}"
+      sequence:
+        - repeat:
+            for_each: "{{ notify_services }}"
+            sequence:
+              - service: "{{ repeat.item }}"
+                data:
+                  message: "{{ message }}"

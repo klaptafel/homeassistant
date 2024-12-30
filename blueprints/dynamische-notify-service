@@ -27,7 +27,8 @@ blueprint:
             - label: Automatisch (op basis van thuisstatus)
               value: automatisch
       default: iedereen
-  mode: queued
+  
+mode: queued
 
 fields:
   title:

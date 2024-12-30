@@ -4,17 +4,10 @@ blueprint:
     A script that announces a message on a media player using text-to-speech.
   domain: script
   input:
-    notify:
-      selector:
-        object: {}
-      name: Notify service
     recipients:
-      name: Ontvangersconfiguratie
-      description: >
-        Configureer notify-services en bijbehorende sensors voor elke ontvanger.
-        Voeg elke ontvanger toe als een object met `notify_service` en `home_sensor`.
       selector:
         object: {}
+      name: Ontvangersconfiguratie
 
 mode: queued
 

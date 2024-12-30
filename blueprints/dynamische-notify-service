@@ -39,38 +39,32 @@ blueprint:
     group:
       name: Groep
       description: Groepeer notificaties.
-      default: ""
       selector:
         text: {}
     tag:
       name: Tag
       description: Notificaties met dezelfde tag worden vervangen.
-      default: ""
       selector:
         text: {}
     image:
       name: Afbeelding
       description: URL van een afbeelding om bij te voegen.
-      default: ""
       selector:
         text: {}
     camera:
       name: Camera
       description: Selecteer een camera-entiteit.
-      default: ""
       selector:
         entity:
           domain: camera
     actions:
       name: Acties
       description: Optionele acties voor de notificatie.
-      default: {}
       selector:
         object: {}
     interruption_level:
       name: Attentiewaarde
       description: Prioriteitsniveau van de melding.
-      default: "active"
       selector:
         select:
           options:
@@ -118,9 +112,9 @@ sequence:
                     title: !input title
                     message: !input message
                     data:
-                      group: "{{ group if group != '' else none }}"
-                      tag: "{{ tag if tag != '' else none }}"
-                      image: "{{ image if image != '' else none }}"
-                      actions: "{{ actions if actions != {} else none }}"
+                      group: !input group
+                      tag: !input tag
+                      image: !input image
+                      actions: !input actions
                       push:
                         interruption-level: "{{ interruption_level }}"

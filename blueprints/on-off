@@ -1,0 +1,47 @@
+blueprint:
+  name: Aan/Uit Automatisering
+  description: |
+    Definieer een trigger voor AAN en UIT, en geef de bijbehorende acties.
+    Zo hoef je niet telkens de hele choose-structuur opnieuw te maken.
+  domain: automation
+  input:
+    aan_trigger:
+      name: Aan Trigger
+      description: Wanneer moet de "aan"-actie uitgevoerd worden?
+      selector:
+        trigger: {}
+    uit_trigger:
+      name: Uit Trigger
+      description: Wanneer moet de "uit"-actie uitgevoerd worden?
+      selector:
+        trigger: {}
+    aan_acties:
+      name: Aan Acties
+      description: Acties die uitgevoerd worden bij de "aan"-trigger.
+      default: []
+      selector:
+        action: {}
+    uit_acties:
+      name: Uit Acties
+      description: Acties die uitgevoerd worden bij de "uit"-trigger.
+      default: []
+      selector:
+        action: {}
+
+mode: single
+triggers:
+  - trigger: !input aan_trigger
+    id: aan
+  - trigger: !input uit_trigger
+    id: uit
+
+actions:
+  - choose:
+      - conditions:
+          - condition: trigger
+            id: aan
+        sequence: !input aan_acties
+      - conditions:
+          - condition: trigger
+            id: uit
+        sequence: !input uit_acties

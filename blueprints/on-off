@@ -2,48 +2,44 @@ blueprint:
 name: Aan Uit Automatisering
 domain: automation
 input:
-on_trigger:
+aan_trigger:
 name: AAN Trigger
 selector:
 object: {}
-on_actions:
+aan_actions:
 name: AAN Acties
 selector:
 action: {}
-off_trigger:
+uit_trigger:
 name: UIT Trigger
 selector:
 object: {}
-off_actions:
+uit_actions:
 name: UIT Acties
 selector:
 action: {}
 
-variables:
-on_trigger_with_id: >
-{% set trigger = on_trigger %}
-{% set trigger = dict(trigger, id=‘on’) %}
-{{ trigger }}
-off_trigger_with_id: >
-{% set trigger = off_trigger %}
-{% set trigger = dict(trigger, id=‘off’) %}
-{{ trigger }}
-
 trigger:
 
-- “{{ on_trigger_with_id }}”
-- “{{ off_trigger_with_id }}”
+- <<: !input aan_trigger
+  id: aan
+- <<: !input uit_trigger
+  id: uit
+
+conditions: []
 
 action:
 
 - choose:
   - conditions:
     - condition: trigger
-      id: on
-      sequence: !input on_actions
+      id:
+      - aan
+        sequence: !input aan_actions
   - conditions:
     - condition: trigger
-      id: off
-      sequence: !input off_actions
+      id:
+      - uit
+        sequence: !input uit_actions
 
 mode: single

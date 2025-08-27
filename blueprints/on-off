@@ -1,48 +1,50 @@
 blueprint:
-  name: On/Off Automation
-  description: |
-    Define one ON trigger with actions and one OFF trigger with actions.
-    This blueprint automatically assigns the correct IDs so you don’t have to.
-  domain: automation
-  input:
-    on_trigger:
-      name: ON - Trigger
-      description: When should the ON actions run?
-      selector:
-        trigger: {}
-    on_actions:
-      name: ON - Actions
-      description: Actions to perform when the ON trigger fires.
-      default: []
-      selector:
-        action: {}
-    off_trigger:
-      name: OFF - Trigger
-      description: When should the OFF actions run?
-      selector:
-        trigger: {}
-    off_actions:
-      name: OFF - Actions
-      description: Actions to perform when the OFF trigger fires.
-      default: []
-      selector:
-        action: {}
-
-mode: single
+name: Flexibele Aan/Uit Automatisering
+description: |
+Definieer verschillende triggers voor AAN en UIT acties.
+Volledig flexibel voor tijd, sensoren, devices, etc.
+domain: automation
+input:
+on_trigger:
+name: AAN Trigger
+description: Wanneer moeten de AAN acties uitgevoerd worden?
+selector:
+object: {}
+on_actions:
+name: AAN Acties
+description: Acties die uitgevoerd worden bij de AAN trigger.
+selector:
+action: {}
+off_trigger:
+name: UIT Trigger  
+description: Wanneer moeten de UIT acties uitgevoerd worden?
+selector:
+object: {}
+off_actions:
+name: UIT Acties
+description: Acties die uitgevoerd worden bij de UIT trigger.
+selector:
+action: {}
 
 trigger:
-  - id: on
-    !input on_trigger
-  - id: off
-    !input off_trigger
+
+- id: “on”
+  <<: !input on_trigger
+- id: “off”  
+  <<: !input off_trigger
+
+condition: []
 
 action:
-  - choose:
-      - conditions:
-          - condition: trigger
-            id: on
-        sequence: !input on_actions
-      - conditions:
-          - condition: trigger
-            id: off
-        sequence: !input off_actions
+
+- choose:
+  - conditions:
+    - condition: trigger
+      id: “on”
+      sequence: !input on_actions
+  - conditions:
+    - condition: trigger
+      id: “off”
+      sequence: !input off_actions
+
+mode: single

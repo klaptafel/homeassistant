@@ -27,9 +27,21 @@ action: {}
 trigger:
 
 - id: “on”
-  <<: !input on_trigger
-- id: “off”  
-  <<: !input off_trigger
+  platform: !input on_trigger.platform
+  at: !input on_trigger.at
+  entity_id: !input on_trigger.entity_id
+  to: !input on_trigger.to
+  from: !input on_trigger.from
+  above: !input on_trigger.above
+  below: !input on_trigger.below
+- id: “off”
+  platform: !input off_trigger.platform
+  at: !input off_trigger.at
+  entity_id: !input off_trigger.entity_id
+  to: !input off_trigger.to
+  from: !input off_trigger.from
+  above: !input off_trigger.above
+  below: !input off_trigger.below
 
 condition: []
 

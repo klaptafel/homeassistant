@@ -1,33 +1,29 @@
 blueprint:
   name: On/Off Automation
   description: |
-    Define an ON and an OFF situation.
-    For each situation, choose:
-    - IF this happens
-    - THEN run these actions.
+    Define one ON trigger with actions and one OFF trigger with actions.
+    This blueprint automatically assigns the correct IDs so you don’t have to.
   domain: automation
   input:
-    on_if:
-      name: IF (ON)
-      description: Trigger(s) that start the ON actions.
-      default: []
+    on_trigger:
+      name: ON - Trigger
+      description: When should the ON actions run?
       selector:
         trigger: {}
-    on_then:
-      name: THEN (ON)
-      description: Actions to perform when ON is triggered.
+    on_actions:
+      name: ON - Actions
+      description: Actions to perform when the ON trigger fires.
       default: []
       selector:
         action: {}
-    off_if:
-      name: IF (OFF)
-      description: Trigger(s) that start the OFF actions.
-      default: []
+    off_trigger:
+      name: OFF - Trigger
+      description: When should the OFF actions run?
       selector:
         trigger: {}
-    off_then:
-      name: THEN (OFF)
-      description: Actions to perform when OFF is triggered.
+    off_actions:
+      name: OFF - Actions
+      description: Actions to perform when the OFF trigger fires.
       default: []
       selector:
         action: {}
@@ -35,15 +31,18 @@ blueprint:
 mode: single
 
 trigger:
-  - !input on_if
-  - !input off_if
-
-variables:
-  trigger_type: "{{ 'on' if trigger in !input on_if else 'off' }}"
+  - id: on
+    !input on_trigger
+  - id: off
+    !input off_trigger
 
 action:
   - choose:
-      - conditions: "{{ trigger_type == 'on' }}"
-        sequence: !input on_then
-      - conditions: "{{ trigger_type == 'off' }}"
-        sequence: !input off_then
+      - conditions:
+          - condition: trigger
+            id: on
+        sequence: !input on_actions
+      - conditions:
+          - condition: trigger
+            id: off
+        sequence: !input off_actions

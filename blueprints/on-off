@@ -1,34 +1,32 @@
 blueprint:
   name: On/Off Automation
   description: |
-    Define an ON and an OFF situation.
-    For each situation you choose:
-    - IF this happens
-    - THEN run these actions.
+    Define two separate situations:
+      - IF something happens → THEN ON actions
+      - IF something else happens → THEN OFF actions
   domain: automation
   input:
     on_if:
       name: IF (ON)
-      description: When should the ON action run?
+      description: Trigger(s) that initiate the ON actions.
       default: []
       selector:
         trigger: {}
     on_then:
       name: THEN (ON)
-      description: Which actions should run when ON is triggered?
+      description: Actions to execute when the ON trigger fires.
       default: []
       selector:
         action: {}
-
     off_if:
       name: IF (OFF)
-      description: When should the OFF action run?
+      description: Trigger(s) that initiate the OFF actions.
       default: []
       selector:
         trigger: {}
     off_then:
       name: THEN (OFF)
-      description: Which actions should run when OFF is triggered?
+      description: Actions to execute when the OFF trigger fires.
       default: []
       selector:
         action: {}
@@ -36,10 +34,8 @@ blueprint:
 mode: single
 
 trigger:
-  - id: on
-    !input on_if
-  - id: off
-    !input off_if
+  - !input on_if
+  - !input off_if
 
 action:
   - choose:

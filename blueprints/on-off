@@ -1,48 +1,53 @@
 blueprint:
-  name: Aan/Uit Automatisering
+  name: On/Off Automation
   description: |
-    Definieer een trigger voor AAN en UIT, en bepaal de bijbehorende acties.
+    Define an ON and an OFF situation.
+    For each situation you choose:
+    - IF this happens
+    - THEN run these actions.
   domain: automation
   input:
-    aan_trigger:
-      name: Aan Trigger
-      description: Wanneer moet de "aan"-actie uitgevoerd worden?
+    on_if:
+      name: IF (ON)
+      description: When should the ON action run?
+      default: []
       selector:
         trigger: {}
-    aan_acties:
-      name: Aan Acties
-      description: Acties die uitgevoerd worden bij de "aan"-trigger.
+    on_then:
+      name: THEN (ON)
+      description: Which actions should run when ON is triggered?
       default: []
       selector:
         action: {}
 
-    uit_trigger:
-      name: Uit Trigger
-      description: Wanneer moet de "uit"-actie uitgevoerd worden?
+    off_if:
+      name: IF (OFF)
+      description: When should the OFF action run?
+      default: []
       selector:
         trigger: {}
-
-    uit_acties:
-      name: Uit Acties
-      description: Acties die uitgevoerd worden bij de "uit"-trigger.
+    off_then:
+      name: THEN (OFF)
+      description: Which actions should run when OFF is triggered?
       default: []
       selector:
         action: {}
 
 mode: single
-triggers:
-  - trigger: !input aan_trigger
-    id: aan
-  - trigger: !input uit_trigger
-    id: uit
 
-actions:
+trigger:
+  - id: on
+    !input on_if
+  - id: off
+    !input off_if
+
+action:
   - choose:
       - conditions:
           - condition: trigger
-            id: aan
-        sequence: !input aan_acties
+            id: on
+        sequence: !input on_then
       - conditions:
           - condition: trigger
-            id: uit
-        sequence: !input uit_acties
+            id: off
+        sequence: !input off_then

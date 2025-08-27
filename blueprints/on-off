@@ -4,12 +4,20 @@ domain: automation
 input:
 aan_trigger:
 name: AAN Trigger
+selector:
+trigger: {}
 aan_actions:
 name: AAN Acties
+selector:
+action: {}
 uit_trigger:
 name: UIT Trigger
+selector:
+trigger: {}
 uit_actions:
 name: UIT Acties
+selector:
+action: {}
 
 trigger:
 
@@ -25,13 +33,11 @@ action:
 - choose:
   - conditions:
     - condition: trigger
-      id:
-      - aan
-        sequence: !input aan_actions
+      id: aan
+      sequence: !input aan_actions
   - conditions:
     - condition: trigger
-      id:
-      - uit
-        sequence: !input uit_actions
+      id: uit
+      sequence: !input uit_actions
 
 mode: single

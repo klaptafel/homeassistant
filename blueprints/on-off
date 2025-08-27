@@ -4,31 +4,23 @@ domain: automation
 input:
 aan_trigger:
 name: AAN Trigger
-selector:
-object: {}
 aan_actions:
 name: AAN Acties
-selector:
-action: {}
 uit_trigger:
 name: UIT Trigger
-selector:
-object: {}
 uit_actions:
 name: UIT Acties
-selector:
-action: {}
 
 trigger:
 
-- <<: !input aan_trigger
-  id: aan
-- <<: !input uit_trigger
-  id: uit
+- id: aan
+  !input aan_trigger
+- id: uit
+  !input uit_trigger
 
-conditions: []
+condition: []
 
-actions:
+action:
 
 - choose:
   - conditions:

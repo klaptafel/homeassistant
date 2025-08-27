@@ -1,60 +1,47 @@
 blueprint:
-name: Flexibele Aan/Uit Automatisering
-description: “Definieer verschillende triggers voor AAN en UIT acties. Volledig flexibel voor tijd, sensoren, devices, etc.”
+name: Aan Uit Automatisering
 domain: automation
 input:
 on_trigger:
 name: AAN Trigger
-description: Wanneer moeten de AAN acties uitgevoerd worden?
 selector:
 object: {}
 on_actions:
 name: AAN Acties
-description: Acties die uitgevoerd worden bij de AAN trigger.
 selector:
 action: {}
 off_trigger:
-name: UIT Trigger  
-description: Wanneer moeten de UIT acties uitgevoerd worden?
+name: UIT Trigger
 selector:
 object: {}
 off_actions:
 name: UIT Acties
-description: Acties die uitgevoerd worden bij de UIT trigger.
 selector:
 action: {}
 
 trigger:
 
-- id: “on”
+- id: on
   platform: !input on_trigger.platform
   at: !input on_trigger.at
   entity_id: !input on_trigger.entity_id
   to: !input on_trigger.to
-  from: !input on_trigger.from
-  above: !input on_trigger.above
-  below: !input on_trigger.below
-- id: “off”
+- id: off
   platform: !input off_trigger.platform
   at: !input off_trigger.at
   entity_id: !input off_trigger.entity_id
   to: !input off_trigger.to
-  from: !input off_trigger.from
-  above: !input off_trigger.above
-  below: !input off_trigger.below
-
-condition: []
 
 action:
 
 - choose:
   - conditions:
     - condition: trigger
-      id: “on”
+      id: on
       sequence: !input on_actions
   - conditions:
     - condition: trigger
-      id: “off”
+      id: off
       sequence: !input off_actions
 
 mode: single

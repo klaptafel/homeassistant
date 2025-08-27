@@ -19,18 +19,20 @@ name: UIT Acties
 selector:
 action: {}
 
+variables:
+on_trigger_with_id: >
+{% set trigger = on_trigger %}
+{% set trigger = dict(trigger, id=‘on’) %}
+{{ trigger }}
+off_trigger_with_id: >
+{% set trigger = off_trigger %}
+{% set trigger = dict(trigger, id=‘off’) %}
+{{ trigger }}
+
 trigger:
 
-- id: on
-  platform: !input on_trigger.platform
-  at: !input on_trigger.at
-  entity_id: !input on_trigger.entity_id
-  to: !input on_trigger.to
-- id: off
-  platform: !input off_trigger.platform
-  at: !input off_trigger.at
-  entity_id: !input off_trigger.entity_id
-  to: !input off_trigger.to
+- “{{ on_trigger_with_id }}”
+- “{{ off_trigger_with_id }}”
 
 action:
 

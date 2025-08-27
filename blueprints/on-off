@@ -1,8 +1,6 @@
 blueprint:
 name: Flexibele Aan/Uit Automatisering
-description: |
-Definieer verschillende triggers voor AAN en UIT acties.
-Volledig flexibel voor tijd, sensoren, devices, etc.
+description: “Definieer verschillende triggers voor AAN en UIT acties. Volledig flexibel voor tijd, sensoren, devices, etc.”
 domain: automation
 input:
 on_trigger:

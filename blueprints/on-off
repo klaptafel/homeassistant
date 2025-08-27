@@ -28,7 +28,7 @@ trigger:
 
 conditions: []
 
-action:
+actions:
 
 - choose:
   - conditions:

@@ -14,9 +14,9 @@ name: UIT Acties
 trigger:
 
 - id: aan
-  !input aan_trigger
+  <<: !input aan_trigger
 - id: uit
-  !input uit_trigger
+  <<: !input uit_trigger
 
 condition: []
 

@@ -1,43 +1,69 @@
 blueprint:
-name: Aan Uit Automatisering
-domain: automation
-input:
-aan_trigger:
-name: AAN Trigger
-selector:
-trigger: {}
-aan_actions:
-name: AAN Acties
-selector:
-action: {}
-uit_trigger:
-name: UIT Trigger
-selector:
-trigger: {}
-uit_actions:
-name: UIT Acties
-selector:
-action: {}
-
-trigger:
-
-- id: aan
-  <<: !input aan_trigger
-- id: uit
-  <<: !input uit_trigger
-
-condition: []
-
-action:
-
-- choose:
-  - conditions:
-    - condition: trigger
-      id: aan
-      sequence: !input aan_actions
-  - conditions:
-    - condition: trigger
-      id: uit
-      sequence: !input uit_actions
+  name: Aan/Uit Automatisering
+  description: Eenvoudige blueprint om acties uit te voeren bij aan- en uit-triggers
+  domain: automation
+  input:
+    trigger_on:
+      name: Aan Trigger
+      description: Entiteit(en) die de "aan" actie triggeren
+      selector:
+        entity:
+          multiple: true
+    trigger_on_state:
+      name: Aan Status
+      description: Naar welke status moet de entiteit gaan om te triggeren?
+      default: "on"
+      selector:
+        text:
+    trigger_off:
+      name: Uit Trigger
+      description: Entiteit(en) die de "uit" actie triggeren
+      selector:
+        entity:
+          multiple: true
+    trigger_off_state:
+      name: Uit Status
+      description: Naar welke status moet de entiteit gaan om te triggeren?
+      default: "off"
+      selector:
+        text:
+    action_on:
+      name: Aan Acties
+      description: Acties die uitgevoerd worden bij "aan"
+      default: []
+      selector:
+        action: {}
+    action_off:
+      name: Uit Acties
+      description: Acties die uitgevoerd worden bij "uit"
+      default: []
+      selector:
+        action: {}
 
 mode: single
+max_exceeded: silent
+
+triggers:
+  - trigger: state
+    entity_id: !input trigger_on
+    to: !input trigger_on_state
+    id: Aan
+  - trigger: state
+    entity_id: !input trigger_off
+    to: !input trigger_off_state
+    id: Uit
+
+conditions: []
+
+actions:
+  - choose:
+      - conditions:
+          - condition: trigger
+            id:
+              - Aan
+        sequence: !input action_on
+      - conditions:
+          - condition: trigger
+            id:
+              - Uit
+        sequence: !input action_off

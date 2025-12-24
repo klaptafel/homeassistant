@@ -4,35 +4,24 @@ blueprint:
   domain: automation
   input:
     trigger_on:
-      name: Aan Trigger
-      description: Entiteit(en) die de "aan" actie triggeren
+      name: Aan Trigger(s)
+      description: Trigger(s) die de "aan" actie activeren
+      default: []
       selector:
-        entity:
-          multiple: true
-    trigger_on_state:
-      name: Aan Status
-      description: Naar welke status moet de entiteit gaan om te triggeren?
-      default: "on"
-      selector:
-        text:
-    trigger_off:
-      name: Uit Trigger
-      description: Entiteit(en) die de "uit" actie triggeren
-      selector:
-        entity:
-          multiple: true
-    trigger_off_state:
-      name: Uit Status
-      description: Naar welke status moet de entiteit gaan om te triggeren?
-      default: "off"
-      selector:
-        text:
+        trigger:
     action_on:
       name: Aan Acties
       description: Acties die uitgevoerd worden bij "aan"
       default: []
       selector:
         action: {}
+    
+    trigger_off:
+      name: Uit Trigger(s)
+      description: Trigger(s) die de "uit" actie activeren
+      default: []
+      selector:
+        trigger:
     action_off:
       name: Uit Acties
       description: Acties die uitgevoerd worden bij "uit"
@@ -43,15 +32,11 @@ blueprint:
 mode: single
 max_exceeded: silent
 
-triggers:
-  - trigger: state
-    entity_id: !input trigger_on
-    to: !input trigger_on_state
-    id: Aan
-  - trigger: state
-    entity_id: !input trigger_off
-    to: !input trigger_off_state
-    id: Uit
+trigger:
+  - id: Aan
+    !input trigger_on
+  - id: Uit
+    !input trigger_off
 
 conditions: []
 
